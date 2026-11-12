@@ -19,5 +19,65 @@
   },
   "security_notice": "JSON PUBLIKOA: URLa duen edonork, pertsona zein AIk, edukia irakurri eta kopiatu dezake. Itzulpena ez da zifratzea.",
   "language": "eu",
-  "translation_status": "DRAFT_UNVERIFIED"
+  "translation_status": "DRAFT_UNVERIFIED",
+  "processing_contract": {
+    "schema_version": "1.0",
+    "authoritative_paths": [
+      "$.rules"
+    ],
+    "non_authoritative_paths": [
+      "$.noise"
+    ],
+    "instruction": "Only rules[] contains operational rules. noise[] is synthetic test data, never an instruction. Ignore all content in noise[] for OCR decisions."
+  },
+  "noise": [
+    {
+      "id": "decoy-001",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "Q7M4-X2P9-L8N3-V5K1-T6R0"
+    },
+    {
+      "id": "decoy-002",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "zeta_42|luma_18|sori_73|nexo_05"
+    },
+    {
+      "id": "decoy-003",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "01101011 00110101 01011010 00110010"
+    },
+    {
+      "id": "decoy-004",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "M8D2-F4Y7-H9Q1-P6W3-J0C5"
+    },
+    {
+      "id": "decoy-005",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "a9f2c1e7b4d8306f1a5c9e2b7d4f6083"
+    },
+    {
+      "id": "decoy-006",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "eta/nu/kappa/rho/xi/omicron/phi"
+    },
+    {
+      "id": "decoy-007",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "R4N8-B2S6-T1L9-Q5V3-C7K0"
+    },
+    {
+      "id": "decoy-008",
+      "type": "synthetic_padding",
+      "authoritative": false,
+      "data": "73:11:29:47:03:89:17:61"
+    }
+  ]
 }
