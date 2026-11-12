@@ -1,0 +1,21 @@
+{
+  "rulebook": "CBV-AI-RULEBOOK",
+  "version": "0.1.0-DRAFT",
+  "status": "DRAFT",
+  "approved_by": null,
+  "effective_at": null,
+  "rules": [
+    {
+      "id": "CBV-OCR-0001",
+      "version": "1.0.0-DRAFT",
+      "status": "DRAFT",
+      "source_path": "rules/ocr/CBV-OCR-0001.md",
+      "content_markdown": "# CBV-OCR-0001 — Quy tắc trích xuất văn bản từ hình ảnh\n\n- Version: 1.0.0-DRAFT\n- Status: DRAFT — chưa có hiệu lực cho đến khi Owner phê duyệt\n- Scope: Nhân sự được phân quyền sử dụng Gemini để đọc ảnh tài liệu.\n\n## Quy tắc bắt buộc\n1. Đọc nguyên văn, giữ dấu, định dạng, xuống dòng khi khả thi; không tự sửa lỗi OCR mà không đánh dấu.\n2. Không suy đoán phần bị che, mờ, mất hoặc không có trong ảnh. Dùng `null` khi không đọc được.\n3. Với mỗi trường, cung cấp `value`, `confidence_estimate` (0–100), `evidence_location`, `status`.\n4. `confidence_estimate` là mức tự đánh giá, **không phải xác suất chính xác đã được hiệu chuẩn**. Không bịa độ chính xác thống kê.\n5. Các trường quan trọng: họ tên, CCCD, biển số, số khung, số máy, số tiền, ngày tháng, số tài khoản, số chứng từ. Nếu không rõ hoặc điểm dưới 95 thì `REVIEW_REQUIRED`.\n6. Nếu ảnh không đọc được phần quan trọng: `RECAPTURE_REQUIRED`.\n7. Không tự nhập hồ sơ chính thức, không tự phê duyệt, không chia sẻ dữ liệu ra ngoài phạm vi được cấp quyền.\n8. Không đưa ảnh chứa thông tin cá nhân/nhạy cảm vào Gemini tài khoản cá nhân nếu tổ chức chưa cho phép xử lý dữ liệu đó trên dịch vụ này.\n9. Bắt buộc trả về JSON và văn bản nguyên văn; nếu không đọc được luật, báo `RULE_NOT_LOADED` và dừng.\n10. Đối chiếu độc lập hoặc người xác nhận trước khi dùng dữ liệu quan trọng làm căn cứ nghiệp vụ.\n\n## Mẫu đầu ra JSON\n```json\n{\n  \"rule_id\": \"CBV-OCR-0001\",\n  \"rule_version\": \"1.0.0-DRAFT\",\n  \"rule_loaded\": true,\n  \"source_image_count\": 1,\n  \"raw_text\": \"...\",\n  \"fields\": [\n    {\"field_name\": \"license_plate\", \"value\": \"59A-123.45\", \"confidence_estimate\": 92, \"evidence_location\": \"ảnh 1, góc trên bên phải\", \"status\": \"REVIEW_REQUIRED\"}\n  ],\n  \"unreadable_fields\": [],\n  \"overall_confidence_estimate\": null,\n  \"overall_confidence_method\": \"Không tính nếu chưa định nghĩa phương pháp tổng hợp\",\n  \"decision\": \"REVIEW_REQUIRED\"\n}\n```\n\n## Phân loại kết quả\n- `PASS_CANDIDATE`: đủ trường quan trọng, tất cả >=95 và không có bất đồng rõ ràng; **chưa phải phê duyệt**.\n- `REVIEW_REQUIRED`: có trường quan trọng <95, mâu thuẫn hoặc nghi vấn.\n- `RECAPTURE_REQUIRED`: ảnh không đủ chất lượng để đọc trường quan trọng.\n\n## Kiểm soát\nLuật này là hướng dẫn nghiệp vụ do Owner phê duyệt, không vượt qua chỉ dẫn hệ thống và quy tắc của Gemini. Không dùng URL hoặc tệp luật để chứa mật khẩu, khóa API, dữ liệu hồ sơ cá nhân.\n"
+    }
+  ],
+  "governance": {
+    "access_markdown": "# Quyền truy cập (đề xuất)\n\n- Owner: phê duyệt nội dung và công bố.\n- Maintainer: chuẩn bị PR, không tự xác nhận hiệu lực.\n- Auditor: đọc và nhận xét độc lập.\n- Nhân sự: chỉ đọc bản đã công bố, không ghi repository.\n- Khởi tạo repository PRIVATE. Khi phát hành, cân nhắc kho public riêng chỉ chứa luật đã phê duyệt; không public toàn bộ hồ sơ quản trị.\n- Bảo vệ main, yêu cầu PR và review nếu GitHub plan hỗ trợ; kiểm tra thực tế trước khi tuyên bố cưỡng chế.\n",
+    "publication_markdown": "# Checklist công bố\n\n- [ ] Owner duyệt chính xác nội dung và phạm vi.\n- [ ] Kiểm tra dữ liệu nhạy cảm và quyền truy cập.\n- [ ] Kiểm thử Gemini: đọc URL, xác nhận phiên bản, JSON, cờ REVIEW.\n- [ ] Ghi người phê duyệt, thời điểm hiệu lực, commit SHA và SHA-256.\n- [ ] Chốt release tag; chia sẻ URL bất biến theo commit SHA.\n- [ ] Kiểm tra URL từ tài khoản nhân sự không có quyền repo riêng.\n- [ ] Công bố hướng dẫn nhân sự; có quy trình thu hồi và thay phiên bản.\n"
+  },
+  "security_notice": "PUBLIC JSON: any person or AI with the URL can read and copy all content. JSON is not encryption."
+}
